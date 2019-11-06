@@ -12,7 +12,7 @@ public class SmurfingInjectorDataGen {
     public static void main(String... args) {
 
         try {
-            String fileName = "src/main/export/smurfingtransactions.csv";
+            String fileName = "src/main/export/smurfingTransactions.csv";
             File userData = new File(fileName);
 
             if (userData.exists()) {
@@ -40,8 +40,7 @@ public class SmurfingInjectorDataGen {
 
                 for (int j = 0; j < randomMiddleMenSize; j++) {
                     int middleManId = getRandomId();
-                    csvWriter.append(String.format("%d,%d,%d,%d,%d\n",
-                            i + 1,
+                    csvWriter.append(String.format("%d,%d,%d,%d\n",
                             senderId,
                             middleManId,
                             getRandomAmount(),

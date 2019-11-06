@@ -7,12 +7,12 @@ import java.sql.Timestamp;
 
 import static net.andreinc.mockneat.unit.types.Ints.ints;
 
-public class TransactionDataGen {
+public class ConnectionDataGen {
 
     public static void main(String... args) {
 
         try {
-            String fileName = "src/main/export/transactions.csv";
+            String fileName = "src/main/export/connections.csv";
             File userData = new File(fileName);
 
             if(userData.exists()) {
@@ -23,17 +23,15 @@ public class TransactionDataGen {
 
             FileWriter csvWriter = new FileWriter(fileName);
 
-            csvWriter.append("FROM,");
-            csvWriter.append("TO,");
-            csvWriter.append("Amount,");
+            csvWriter.append("LEFT_ID,");
+            csvWriter.append("RIGHT_ID,");
             csvWriter.append("Timestamp");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 100000; i++) {
-                csvWriter.append(String.format("%d,%d,%d,%d\n",
+            for (int i = 0; i < 10000; i++) {
+                csvWriter.append(String.format("%d,%d,%d\n",
                         getRandomId(),
                         getRandomId(),
-                        getRandomAmount(),
                         getRandomTimestamp()
                 ));
             }
