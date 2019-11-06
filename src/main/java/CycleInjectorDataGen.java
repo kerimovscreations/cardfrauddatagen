@@ -63,7 +63,7 @@ public class CycleInjectorDataGen {
                 ));
 
                 int randomMiddleMenSize = ints()
-                        .range(2, 4)
+                        .range(2, 5)
                         .get();
 
                 for (int j = 0; j < randomMiddleMenSize; j++) {
