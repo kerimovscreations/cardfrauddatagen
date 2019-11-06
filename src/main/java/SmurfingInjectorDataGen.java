@@ -7,15 +7,15 @@ import java.sql.Timestamp;
 
 import static net.andreinc.mockneat.unit.types.Ints.ints;
 
-public class TransactionDataGen {
+public class SmurfingInjectorDataGen {
 
     public static void main(String... args) {
 
         try {
-            String fileName = "src/main/export/transactions.csv";
+            String fileName = "src/main/export/smurfingtransactions.csv";
             File userData = new File(fileName);
 
-            if(userData.exists()) {
+            if (userData.exists()) {
                 userData.delete();
             }
 
@@ -30,14 +30,32 @@ public class TransactionDataGen {
             csvWriter.append("Timestamp");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 100000; i++) {
-                csvWriter.append(String.format("%d,%d,%d,%d,%d\n",
-                        i + 1,
-                        getRandomId(),
-                        getRandomId(),
-                        getRandomAmount(),
-                        getRandomTimestamp()
-                ));
+            for (int i = 0; i < 10; i++) {
+                int senderId = getRandomId();
+                int receivedId = getRandomId();
+
+                int randomMiddleMenSize = ints()
+                        .range(3, 10)
+                        .get();
+
+                for (int j = 0; j < randomMiddleMenSize; j++) {
+                    int middleManId = getRandomId();
+                    csvWriter.append(String.format("%d,%d,%d,%d,%d\n",
+                            i + 1,
+                            senderId,
+                            middleManId,
+                            getRandomAmount(),
+                            getRandomTimestamp()
+                    ));
+
+                    csvWriter.append(String.format("%d,%d,%d,%d,%d\n",
+                            i + 1,
+                            middleManId,
+                            receivedId,
+                            getRandomAmount(),
+                            getRandomTimestamp()
+                    ));
+                }
             }
 
             csvWriter.flush();
@@ -63,7 +81,7 @@ public class TransactionDataGen {
         long offset = Timestamp.valueOf("2019-01-01 00:00:00").getTime();
         long end = Timestamp.valueOf("2019-06-01 00:00:00").getTime();
         long diff = end - offset + 1;
-        Timestamp rand = new Timestamp(offset + (long)(Math.random() * diff));
+        Timestamp rand = new Timestamp(offset + (long) (Math.random() * diff));
         return rand.getTime();
     }
 }
