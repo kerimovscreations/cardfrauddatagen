@@ -51,12 +51,12 @@ public class BiasedReviewsInjectorDataGen {
 
             while (mapIterator.hasNext()) {
                 int[] products = productsMap.get(mapIterator.next());
-
+                int userId = getRandomUserId();
                 int randomReviewCount = ints().range(5, products.length).get();
 
                 for (int i = 0; i < randomReviewCount; i++) {
                     csvWriter.append(String.format("%d,%d,%d,%d\n",
-                            getRandomUserId(),
+                            userId,
                             products[i],
                             5,
                             getRandomTimestamp()
