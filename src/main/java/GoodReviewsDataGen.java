@@ -23,14 +23,15 @@ public class GoodReviewsDataGen {
 
             FileWriter csvWriter = new FileWriter(fileName);
 
-            csvWriter.append("FROM,");
-            csvWriter.append("TO,");
-            csvWriter.append("Rating,");
-            csvWriter.append("Timestamp");
+            csvWriter.append(":START_ID(Users),");
+            csvWriter.append(":END_ID(Goods),");
+            csvWriter.append("Rating:int,");
+            csvWriter.append("Timestamp:long,");
+            csvWriter.append(":TYPE");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 50000; i++) {
-                csvWriter.append(String.format("%d,%d,%d,%d\n",
+            for (int i = 0; i < 80000; i++) {
+                csvWriter.append(String.format("%d,%d,%d,%d,REVIEW_IN\n",
                         getRandomUserId(),
                         getRandomGoodId(),
                         getRandomRating(),
@@ -46,11 +47,11 @@ public class GoodReviewsDataGen {
     }
 
     private static int getRandomUserId() {
-        return ints().range(1, 20001).get();
+        return ints().range(1, 100001).get();
     }
 
     private static int getRandomGoodId() {
-        return ints().range(1, 80001).get();
+        return ints().range(1, 100001).get();
     }
 
     private static int getRandomRating() {

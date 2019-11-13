@@ -23,14 +23,16 @@ public class TransactionDataGen {
 
             FileWriter csvWriter = new FileWriter(fileName);
 
-            csvWriter.append("FROM,");
-            csvWriter.append("TO,");
-            csvWriter.append("Amount,");
-            csvWriter.append("Timestamp");
+            //:START_ID,:END_ID,Amount,Timestamp
+            csvWriter.append(":START_ID(Users),");
+            csvWriter.append(":END_ID(Users),");
+            csvWriter.append("Amount:int,");
+            csvWriter.append("Timestamp:long,");
+            csvWriter.append(":TYPE");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 100000; i++) {
-                csvWriter.append(String.format("%d,%d,%d,%d\n",
+            for (int i = 0; i < 1500000; i++) {
+                csvWriter.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
                         getRandomId(),
                         getRandomId(),
                         getRandomAmount(),
@@ -46,14 +48,14 @@ public class TransactionDataGen {
     }
 
     private static int getRandomId() {
-        return ints().range(1, 20001).get();
+        return ints().range(1, 100001).get();
     }
 
     private static int getRandomAmount() {
         return MockNeat.threadLocal().probabilites(Integer.class)
                 .add(0.5, ints().range(0, 100))
                 .add(0.3, ints().range(100, 300))
-                .add(0.2, ints().range(300, 500))
+                .add(0.2, ints().range(300, 800))
                 .get();
     }
 

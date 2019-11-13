@@ -23,14 +23,14 @@ public class SmurfingInjectorDataGen {
 
             FileWriter csvWriter = new FileWriter(fileName);
 
-            csvWriter.append("ID,");
-            csvWriter.append("FROM,");
-            csvWriter.append("TO,");
-            csvWriter.append("Amount,");
-            csvWriter.append("Timestamp");
+            csvWriter.append(":START_ID(Users),");
+            csvWriter.append(":END_ID(Users),");
+            csvWriter.append("Amount:int,");
+            csvWriter.append("Timestamp:long,");
+            csvWriter.append(":TYPE");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 100; i++) {
                 int senderId = getRandomId();
                 int receivedId = getRandomId();
 
@@ -40,15 +40,14 @@ public class SmurfingInjectorDataGen {
 
                 for (int j = 0; j < randomMiddleMenSize; j++) {
                     int middleManId = getRandomId();
-                    csvWriter.append(String.format("%d,%d,%d,%d\n",
+                    csvWriter.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
                             senderId,
                             middleManId,
                             getRandomAmount(),
                             getRandomTimestamp()
                     ));
 
-                    csvWriter.append(String.format("%d,%d,%d,%d,%d\n",
-                            i + 1,
+                    csvWriter.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
                             middleManId,
                             receivedId,
                             getRandomAmount(),
@@ -65,14 +64,14 @@ public class SmurfingInjectorDataGen {
     }
 
     private static int getRandomId() {
-        return ints().range(1, 20001).get();
+        return ints().range(1, 100001).get();
     }
 
     private static int getRandomAmount() {
         return MockNeat.threadLocal().probabilites(Integer.class)
-                .add(0.5, ints().range(0, 100))
+                .add(0.2, ints().range(0, 100))
                 .add(0.3, ints().range(100, 300))
-                .add(0.2, ints().range(300, 500))
+                .add(0.5, ints().range(300, 1000))
                 .get();
     }
 

@@ -21,7 +21,7 @@ public class MerchantDataGen {
 
             FileWriter csvWriter = new FileWriter(fileName);
 
-            csvWriter.append("ID,");
+            csvWriter.append("merchantId:ID(Merchants),");
             csvWriter.append("Name,");
             csvWriter.append("Email,");
             csvWriter.append("Domain,");

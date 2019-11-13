@@ -26,10 +26,11 @@ public class CycleInjectorDataGen {
 
             FileWriter csvWriterTransaction = new FileWriter(fileName);
 
-            csvWriterTransaction.append("FROM,");
-            csvWriterTransaction.append("TO,");
-            csvWriterTransaction.append("Amount,");
-            csvWriterTransaction.append("Timestamp");
+            csvWriterTransaction.append(":START_ID(Users),");
+            csvWriterTransaction.append(":END_ID(Users),");
+            csvWriterTransaction.append("Amount:int,");
+            csvWriterTransaction.append("Timestamp:long,");
+            csvWriterTransaction.append(":TYPE");
             csvWriterTransaction.append("\n");
 
             // connections
@@ -44,18 +45,19 @@ public class CycleInjectorDataGen {
 
             FileWriter csvWriterConnections = new FileWriter(fileName2);
 
-            csvWriterConnections.append("RIGHT_ID,");
-            csvWriterConnections.append("LEFT_ID,");
-            csvWriterConnections.append("Timestamp");
+            csvWriterConnections.append(":START_ID(Users),");
+            csvWriterConnections.append(":END_ID(Users),");
+            csvWriterConnections.append("Timestamp:long,");
+            csvWriterConnections.append(":TYPE");
             csvWriterConnections.append("\n");
 
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 100; i++) {
                 int senderId = getRandomId();
                 int receivedId = getRandomId();
 
                 int lastMiddleMan = getRandomId();
 
-                csvWriterTransaction.append(String.format("%d,%d,%d,%d\n",
+                csvWriterTransaction.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
                         senderId,
                         lastMiddleMan,
                         getRandomAmount(),
@@ -68,7 +70,7 @@ public class CycleInjectorDataGen {
 
                 for (int j = 0; j < randomMiddleMenSize; j++) {
                     int newMiddleMan = getRandomId();
-                    csvWriterTransaction.append(String.format("%d,%d,%d,%d\n",
+                    csvWriterTransaction.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
                             lastMiddleMan,
                             newMiddleMan,
                             getRandomAmount(),
@@ -78,14 +80,14 @@ public class CycleInjectorDataGen {
                     lastMiddleMan = newMiddleMan;
                 }
 
-                csvWriterTransaction.append(String.format("%d,%d,%d,%d\n",
+                csvWriterTransaction.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
                         lastMiddleMan,
                         receivedId,
                         getRandomAmount(),
                         getRandomTimestamp()
                 ));
 
-                csvWriterConnections.append(String.format("%d,%d,%d\n",
+                csvWriterConnections.append(String.format("%d,%d,%d,CONNECTION\n",
                         senderId,
                         receivedId,
                         getRandomTimestamp()
@@ -103,14 +105,14 @@ public class CycleInjectorDataGen {
     }
 
     private static int getRandomId() {
-        return ints().range(1, 20001).get();
+        return ints().range(1, 100001).get();
     }
 
     private static int getRandomAmount() {
         return MockNeat.threadLocal().probabilites(Integer.class)
                 .add(0.5, ints().range(0, 100))
                 .add(0.3, ints().range(100, 300))
-                .add(0.2, ints().range(300, 500))
+                .add(0.2, ints().range(300, 800))
                 .get();
     }
 

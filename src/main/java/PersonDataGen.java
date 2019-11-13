@@ -21,14 +21,14 @@ public class PersonDataGen {
 
             FileWriter csvWriter = new FileWriter(fileName);
 
-            csvWriter.append("ID,");
+            csvWriter.append("userId:ID(Users),");
             csvWriter.append("Name,");
             csvWriter.append("Email,");
-            csvWriter.append("Age,");
+            csvWriter.append("Age:int,");
             csvWriter.append("Sex");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 20000; i++) {
+            for (int i = 0; i < 100000; i++) {
                 Person person = fairy.person();
                 csvWriter.append(String.format("%d,%s %s,%s,%s,%s\n",
                         i + 1,

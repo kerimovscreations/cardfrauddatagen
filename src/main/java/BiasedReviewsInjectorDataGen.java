@@ -15,7 +15,7 @@ public class BiasedReviewsInjectorDataGen {
             String fileName = "src/main/export/biasedgoodreviews.csv";
             File reviewsFile = new File(fileName);
 
-            if(reviewsFile.exists()) {
+            if (reviewsFile.exists()) {
                 reviewsFile.delete();
             }
 
@@ -23,29 +23,35 @@ public class BiasedReviewsInjectorDataGen {
 
             FileWriter csvWriter = new FileWriter(fileName);
 
-            csvWriter.append("FROM,");
-            csvWriter.append("TO,");
-            csvWriter.append("Rating,");
-            csvWriter.append("Timestamp");
+            csvWriter.append(":START_ID(Users),");
+            csvWriter.append(":END_ID(Goods),");
+            csvWriter.append("Rating:int,");
+            csvWriter.append("Timestamp:long,");
+            csvWriter.append(":TYPE");
             csvWriter.append("\n");
 
-            HashMap<Integer, int[]> productsMap= new HashMap<Integer, int[]>();
+            HashMap<Integer, int[]> productsMap = new HashMap<Integer, int[]>();
 
-            productsMap.put(9217, new int[]{78681, 70026, 70397,
-                    67218, 67212, 52610, 25215, 15638, 15359, 10872, 6023, 1677});
-
-            productsMap.put(9219, new int[]{62906, 56141, 50627, 47360, 43412, 28203,
-                    23887, 21515, 17048, 8553, 768});
-
-            productsMap.put(9220, new int[]{69169, 65530, 55382, 48122, 40519, 38390,
-                    34765, 34524, 24218, 5226});
-
-            productsMap.put(9227, new int[]{77018, 58852, 56901, 48583, 44640, 42804,
-                    30726, 22821, 22779, 16492, 37});
-
-            productsMap.put(9231, new int[]{77432, 71335, 70340, 62713, 57593, 41844,
-                    38690, 31993, 29880, 17615, 11487, 5104, 5032, 3849});
-
+            productsMap.put(97, new int[]{99700, 86088, 83840, 83812, 73626, 70122,
+                    67797, 44057, 26921, 11561});
+            productsMap.put(139, new int[]{85361, 69842, 57316, 55767,
+                    46351, 41829, 37573, 28405, 23352, 15570, 12343, 11033});
+            productsMap.put(142, new int[]{96292, 90098, 83894, 81213, 74757, 71178,
+                    45215, 44429, 28628, 17184, 9844, 4993});
+            productsMap.put(533, new int[]{98728, 95878, 88130, 44225, 37857,
+                    37410, 37164, 36789, 13472, 7436});
+            productsMap.put(694, new int[]{99314, 90618, 71887, 69696, 65826, 36289,
+                    35820, 14339, 12595, 8927});
+            productsMap.put(1041, new int[]{99466, 96425, 94310, 90180, 59423, 56134,
+                    54895, 48424, 46353, 46293, 42302, 39321, 32348, 30712, 23212, 19942});
+            productsMap.put(1209, new int[]{98102, 95917, 82918, 81425, 78819, 61777,
+                    59874, 58611, 50162, 47571, 44995, 37178, 26866, 21528, 15940, 6962, 1429});
+            productsMap.put(1271, new int[]{90981, 90964, 90036, 88231, 87518, 81135,
+                    72338, 67478, 40183, 29061, 18696, 12695});
+            productsMap.put(1687, new int[]{98204, 84305, 80620, 79084, 58250,
+                    34964, 25942, 19114, 4147});
+            productsMap.put(1856, new int[]{94617, 90230, 83109, 79636, 76518, 68152,
+                    34043, 33396, 23427});
 
             Iterator mapIterator = productsMap.keySet().iterator();
 
@@ -55,7 +61,7 @@ public class BiasedReviewsInjectorDataGen {
                 int randomReviewCount = ints().range(5, products.length).get();
 
                 for (int i = 0; i < randomReviewCount; i++) {
-                    csvWriter.append(String.format("%d,%d,%d,%d\n",
+                    csvWriter.append(String.format("%d,%d,%d,%d,REVIEW_IN\n",
                             userId,
                             products[i],
                             5,
@@ -79,7 +85,7 @@ public class BiasedReviewsInjectorDataGen {
         long offset = Timestamp.valueOf("2019-01-01 00:00:00").getTime();
         long end = Timestamp.valueOf("2019-06-01 00:00:00").getTime();
         long diff = end - offset + 1;
-        Timestamp rand = new Timestamp(offset + (long)(Math.random() * diff));
+        Timestamp rand = new Timestamp(offset + (long) (Math.random() * diff));
         return rand.getTime();
     }
 }

@@ -1,5 +1,3 @@
-import net.andreinc.mockneat.MockNeat;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -23,13 +21,14 @@ public class ConnectionDataGen {
 
             FileWriter csvWriter = new FileWriter(fileName);
 
-            csvWriter.append("LEFT_ID,");
-            csvWriter.append("RIGHT_ID,");
-            csvWriter.append("Timestamp");
+            csvWriter.append(":START_ID(Users),");
+            csvWriter.append(":END_ID(Users),");
+            csvWriter.append("Timestamp:long,");
+            csvWriter.append(":TYPE");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 10000; i++) {
-                csvWriter.append(String.format("%d,%d,%d\n",
+            for (int i = 0; i < 50000; i++) {
+                csvWriter.append(String.format("%d,%d,%d,CONNECTION\n",
                         getRandomId(),
                         getRandomId(),
                         getRandomTimestamp()
@@ -44,15 +43,7 @@ public class ConnectionDataGen {
     }
 
     private static int getRandomId() {
-        return ints().range(1, 20001).get();
-    }
-
-    private static int getRandomAmount() {
-        return MockNeat.threadLocal().probabilites(Integer.class)
-                .add(0.5, ints().range(0, 100))
-                .add(0.3, ints().range(100, 300))
-                .add(0.2, ints().range(300, 500))
-                .get();
+        return ints().range(1, 100001).get();
     }
 
     private static long getRandomTimestamp() {
