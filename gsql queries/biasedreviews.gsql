@@ -1,0 +1,18 @@
+CREATE QUERY findBiasedReviews(int maxLimit) FOR GRAPH MyGraph syntax v2 {
+
+	GroupByAccum<string customerId, SumAccum<int> ratingCount> @customerRatings;
+	AvgAccum @rating;
+	MaxAccum<string> @mostBiasedCustomer;
+
+  merRef = {Merchant.*};
+
+	merchands = SELECT m
+	            FROM  merRef:m - (<Ownership) - Good - (<Review:r) - User:u
+	            ACCUM m.@rating += r.rating,
+	                  m.@customerRatings += (u.name -> 1),
+	                  m.@mostBiasedCustomer += u.name
+	            HAVING m.@customerRatings.get(m.@mostBiasedCustomer).ratingCount > 1
+	            LIMIT maxLimit;
+
+  PRINT merchands;
+}

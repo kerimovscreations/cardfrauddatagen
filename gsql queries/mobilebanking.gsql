@@ -1,0 +1,10 @@
+CREATE QUERY findMobileBankingFraud(int maxLimit) FOR GRAPH MyGraph syntax v2 {
+
+    userRef = {User.*};
+
+    senderList = SELECT snd
+	             FROM userRef:snd - (Transaction>*4.Connection) - User:tgt
+	              LIMIT maxLimit;
+
+  PRINT senderList;
+}

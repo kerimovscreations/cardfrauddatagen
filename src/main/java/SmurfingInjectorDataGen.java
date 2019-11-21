@@ -30,7 +30,7 @@ public class SmurfingInjectorDataGen {
             csvWriter.append(":TYPE");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 500; i++) {
                 int senderId = getRandomId();
                 int receivedId = getRandomId();
 

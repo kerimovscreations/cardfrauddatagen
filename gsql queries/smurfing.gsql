@@ -1,0 +1,19 @@
+CREATE QUERY findSmurfingUsers(int maxLimit) FOR GRAPH MyGraph syntax v2 {
+
+    GroupByAccum<string senderName, SetAccum<string> middlemen> @middlemenAggregator;
+    MaxAccum<string> @mostCommonSender;
+
+    userRef = {User.*};
+	receiver = SELECT tgt
+	            FROM userRef:sender - (Transaction>: t) - User:middleman - (Transaction>: t2)- User:tgt
+	            ACCUM tgt.@middlemenAggregator += (sender.name -> middleman.name),
+                    tgt.@mostCommonSender += sender.name
+	            HAVING tgt.@middlemenAggregator.get(tgt.@mostCommonSender).middlemen.size() >= 2
+	            LIMIT maxLimit;
+
+    PRINT receiver [
+	    receiver.name,
+		receiver.@mostCommonSender as sender,
+		receiver.@middlemenAggregator.get(receiver.@mostCommonSender) as middlemen
+	];
+}

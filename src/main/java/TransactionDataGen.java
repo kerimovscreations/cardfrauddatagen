@@ -31,7 +31,7 @@ public class TransactionDataGen {
             csvWriter.append(":TYPE");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 1500000; i++) {
+            for (int i = 0; i < 100000; i++) {
                 csvWriter.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
                         getRandomId(),
                         getRandomId(),
