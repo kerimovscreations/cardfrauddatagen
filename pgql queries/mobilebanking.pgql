@@ -1,0 +1,2 @@
+SELECT u.email, u2.email, u3.email, u4.email, u5.email
+MATCH (u:User)-[t:Transaction]-(u2:User)-[t2:Transaction]-(u3:User)-[t3:Transaction]-(u4:User)-[t4:Transaction]-(u5:User)-[c:Connection]-(u1)

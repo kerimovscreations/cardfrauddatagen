@@ -4,7 +4,7 @@ CREATE QUERY findBiasedReviews(int maxLimit) FOR GRAPH MyGraph syntax v2 {
 	AvgAccum @rating;
 	MaxAccum<string> @mostBiasedCustomer;
 
-  merRef = {Merchant.*};
+    merRef = {Merchant.*};
 
 	merchands = SELECT m
 	            FROM  merRef:m - (<Ownership) - Good - (<Review:r) - User:u

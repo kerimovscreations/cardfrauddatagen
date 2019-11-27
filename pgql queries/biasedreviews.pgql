@@ -1,0 +1,4 @@
+SELECT u.email as customer, m.name as merchant, COUNT(r) as perfectreviews
+MATCH (u:User)-[r:Review]-(g:Good)-[o:Ownership]-(m:Merchant)
+GROUP BY u, m
+HAVING COUNT(r) > 5 AND AVG(r.rating) = 5

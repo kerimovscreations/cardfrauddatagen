@@ -51,7 +51,7 @@ public class CycleInjectorDataGen {
             csvWriterConnections.append(":TYPE");
             csvWriterConnections.append("\n");
 
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 300; i++) {
                 int senderId = getRandomId();
                 int receivedId = getRandomId();
 
@@ -105,7 +105,7 @@ public class CycleInjectorDataGen {
     }
 
     private static int getRandomId() {
-        return ints().range(1, 100001).get();
+        return ints().range(1, 200001).get();
     }
 
     private static int getRandomAmount() {

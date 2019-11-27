@@ -27,7 +27,7 @@ public class ConnectionDataGen {
             csvWriter.append(":TYPE");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 50000; i++) {
+            for (int i = 0; i < 100000; i++) {
                 csvWriter.append(String.format("%d,%d,%d,CONNECTION\n",
                         getRandomId(),
                         getRandomId(),
@@ -43,7 +43,7 @@ public class ConnectionDataGen {
     }
 
     private static int getRandomId() {
-        return ints().range(1, 100001).get();
+        return ints().range(1, 200001).get();
     }
 
     private static long getRandomTimestamp() {

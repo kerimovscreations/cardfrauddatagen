@@ -28,7 +28,7 @@ public class MerchantDataGen {
             csvWriter.append("VATNumber");
             csvWriter.append("\n");
 
-            for (int i = 200000; i < 210000; i++) {
+            for (int i = 400000; i < 450000; i++) {
                 Company company = fairy.company();
                 csvWriter.append(String.format("%d,%s,%s,%s,%s\n",
                         i + 1,

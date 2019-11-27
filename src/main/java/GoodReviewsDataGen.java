@@ -30,7 +30,7 @@ public class GoodReviewsDataGen {
             csvWriter.append(":TYPE");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 80000; i++) {
+            for (int i = 0; i < 100000; i++) {
                 csvWriter.append(String.format("%d,%d,%d,%d,REVIEW_IN\n",
                         getRandomUserId(),
                         getRandomGoodId(),
@@ -47,11 +47,11 @@ public class GoodReviewsDataGen {
     }
 
     private static int getRandomUserId() {
-        return ints().range(1, 100001).get();
+        return ints().range(1, 200001).get();
     }
 
     private static int getRandomGoodId() {
-        return ints().range(100000, 200001).get();
+        return ints().range(200000, 400001).get();
     }
 
     private static int getRandomRating() {

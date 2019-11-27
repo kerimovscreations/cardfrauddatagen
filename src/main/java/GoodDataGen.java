@@ -44,7 +44,7 @@ public class GoodDataGen {
             csvWriterOwnership.append(":TYPE");
             csvWriterOwnership.append("\n");
 
-            for (int i = 100000; i < 200000; i++) {
+            for (int i = 200000; i < 400000; i++) {
                 int goodId = i + 1;
                 csvWriterGood.append(String.format("%d,%s,%d\n",
                         goodId,
@@ -69,7 +69,7 @@ public class GoodDataGen {
     }
 
     private static int getRandomMerchantId() {
-        return ints().range(200000, 210001).get();
+        return ints().range(400000, 450001).get();
     }
 
     private static int getRandomAmount() {

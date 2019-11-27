@@ -44,8 +44,7 @@ public class BiasedReviewsInjectorDataGen {
             csvWriter2.append(":TYPE");
             csvWriter2.append("\n");
 
-            for (int i = 0; i < 10; i++)
-            {
+            for (int i = 0; i < 50; i++) {
                 int merchantId = getRandomMerchantId();
                 int randomGoodCount = ints().range(5, 10).get();
 
@@ -88,15 +87,15 @@ public class BiasedReviewsInjectorDataGen {
     }
 
     private static int getRandomUserId() {
-        return ints().range(1, 100001).get();
+        return ints().range(1, 200001).get();
     }
 
     private static int getRandomGoodId() {
-        return ints().range(100000, 200001).get();
+        return ints().range(200000, 400001).get();
     }
 
     private static int getRandomMerchantId() {
-        return ints().range(200000, 210001).get();
+        return ints().range(400000, 450001).get();
     }
 
     private static long getRandomTimestamp() {

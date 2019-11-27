@@ -28,7 +28,7 @@ public class PersonDataGen {
             csvWriter.append("Sex");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 100000; i++) {
+            for (int i = 0; i < 200000; i++) {
                 Person person = fairy.person();
                 csvWriter.append(String.format("%d,%s %s,%s,%s,%s\n",
                         i + 1,
