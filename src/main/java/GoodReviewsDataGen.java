@@ -51,7 +51,7 @@ public class GoodReviewsDataGen {
     }
 
     private static int getRandomGoodId() {
-        return ints().range(1, 100001).get();
+        return ints().range(100000, 200001).get();
     }
 
     private static int getRandomRating() {

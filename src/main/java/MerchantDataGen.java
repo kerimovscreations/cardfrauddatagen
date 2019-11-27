@@ -11,13 +11,13 @@ public class MerchantDataGen {
         Fairy fairy = Fairy.create();
         try {
             String fileName = "src/main/export/merchants.csv";
-            File merchandData = new File(fileName);
+            File merchantData = new File(fileName);
 
-            if (merchandData.exists()) {
-                merchandData.delete();
+            if (merchantData.exists()) {
+                merchantData.delete();
             }
 
-            merchandData.createNewFile();
+            merchantData.createNewFile();
 
             FileWriter csvWriter = new FileWriter(fileName);
 
@@ -28,7 +28,7 @@ public class MerchantDataGen {
             csvWriter.append("VATNumber");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 10000; i++) {
+            for (int i = 200000; i < 210000; i++) {
                 Company company = fairy.company();
                 csvWriter.append(String.format("%d,%s,%s,%s,%s\n",
                         i + 1,
