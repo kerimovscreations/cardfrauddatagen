@@ -1,3 +1,3 @@
-MATCH (u1:User)-[:Transaction]->(m1:User)-[:Transaction]->(m2:User)-[:Transaction]->(m3:User)-[:Transaction]->(m4:User)-[:Transaction]->(u2:User)
-WHERE (u1)-[:Connection]-(u2)
-RETURN u1, m1, m2, m3, m4, u2
+MATCH (u1:Users)-[:TRANSACTION]->(m1:Users)-[:TRANSACTION]->(m2:Users)-[:TRANSACTION]->(m3:Users)-[:TRANSACTION]->(m4:Users)-[:TRANSACTION]->(u2:Users)-[c:CONNECTION]-(u1)
+RETURN u1, m1, m2, m3, m4, u2, c
+  LIMIT 10

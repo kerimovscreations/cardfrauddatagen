@@ -1,7 +1,8 @@
-MATCH (u:User)-[r:Review]->(g:Good)-[o:Ownership]->(m:Merchant)
-WITH u, m, collect(r) as reviews
-WHERE size(reviews) >= 4
+MATCH (u:Users)-[r:REVIEW_IN]->(g:Goods)-[o:OWNERSHIP]->(m:Merchants)
+WITH u, m, collect(r) as reviews, collect(g) as goods
+  WHERE size(reviews) >= 4
 UNWIND reviews as revList
-WITH avg(revList.rating) as avgRating, u, m, reviews
-WHERE avgRating >= 4
-RETURN u, m, reviews
+WITH avg(revList.Rating) as avgRating, u, m, goods, reviews
+  WHERE avgRating >= 4
+RETURN u, m, goods, reviews
+  LIMIT 10
