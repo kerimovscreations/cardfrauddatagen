@@ -29,7 +29,7 @@ public class MerchantDataGen {
 
             merchantData.createNewFile();
 
-            FileWriter csvWriter = new FileWriter(fileName);
+            FileWriter csvWriter = new FileWriter(String.format("%s/%s", dirName, fileName));
 
             csvWriter.append("merchantId:ID(Merchants),");
             csvWriter.append("Name,");

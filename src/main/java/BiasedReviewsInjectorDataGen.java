@@ -25,7 +25,7 @@ public class BiasedReviewsInjectorDataGen {
 
             reviewsFile.createNewFile();
 
-            FileWriter csvWriter = new FileWriter(fileName);
+            FileWriter csvWriter = new FileWriter(String.format("%s/%s", dirName, fileName));
 
             csvWriter.append(":START_ID(Users),");
             csvWriter.append(":END_ID(Goods),");
@@ -43,7 +43,7 @@ public class BiasedReviewsInjectorDataGen {
 
             ownershipFile.createNewFile();
 
-            FileWriter csvWriter2 = new FileWriter(fileName2);
+            FileWriter csvWriter2 = new FileWriter(String.format("%s/%s", dirName, fileName2));
 
             csvWriter2.append(":START_ID(Goods),");
             csvWriter2.append(":END_ID(Merchants),");

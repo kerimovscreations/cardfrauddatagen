@@ -19,15 +19,15 @@ public class TransactionDataGen {
         try {
             String dirName = Constants.folderName(this.isDatasetLarge);
             String fileName = "transactions.csv";
-            File userData = new File(dirName, fileName);
+            File file = new File(dirName, fileName);
 
-            if (userData.exists()) {
-                userData.delete();
+            if (file.exists()) {
+                file.delete();
             }
 
-            userData.createNewFile();
+            file.createNewFile();
 
-            FileWriter csvWriter = new FileWriter(fileName);
+            FileWriter csvWriter = new FileWriter(String.format("%s/%s", dirName, fileName));
 
             //:START_ID,:END_ID,Amount,Timestamp
             csvWriter.append(":START_ID(Users),");

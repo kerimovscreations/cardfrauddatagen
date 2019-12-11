@@ -29,7 +29,7 @@ public class CycleInjectorDataGen {
 
             cycleTranscations.createNewFile();
 
-            FileWriter csvWriterTransaction = new FileWriter(fileName);
+            FileWriter csvWriterTransaction = new FileWriter(String.format("%s/%s", dirName, fileName));
 
             csvWriterTransaction.append(":START_ID(Users),");
             csvWriterTransaction.append(":END_ID(Users),");
@@ -48,7 +48,7 @@ public class CycleInjectorDataGen {
 
             cycleTranscationsConnections.createNewFile();
 
-            FileWriter csvWriterConnections = new FileWriter(fileName2);
+            FileWriter csvWriterConnections = new FileWriter(String.format("%s/%s", dirName, fileName2));
 
             csvWriterConnections.append(":START_ID(Users),");
             csvWriterConnections.append(":END_ID(Users),");

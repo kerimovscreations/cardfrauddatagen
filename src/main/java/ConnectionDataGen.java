@@ -23,7 +23,7 @@ public class ConnectionDataGen {
 
             userData.createNewFile();
 
-            FileWriter csvWriter = new FileWriter(fileName);
+            FileWriter csvWriter = new FileWriter(String.format("%s/%s", dirName, fileName));
 
             csvWriter.append(":START_ID(Users),");
             csvWriter.append(":END_ID(Users),");

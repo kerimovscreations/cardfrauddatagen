@@ -29,7 +29,7 @@ public class PersonDataGen {
 
             userData.createNewFile();
 
-            FileWriter csvWriter = new FileWriter(fileName);
+            FileWriter csvWriter = new FileWriter(String.format("%s/%s", dirName, fileName));
 
             csvWriter.append("userId:ID(Users),");
             csvWriter.append("Name,");

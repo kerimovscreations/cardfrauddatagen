@@ -3,7 +3,6 @@ import net.andreinc.mockneat.MockNeat;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Timestamp;
 
 import static net.andreinc.mockneat.unit.types.Ints.ints;
 
@@ -28,7 +27,7 @@ public class GoodReviewsDataGen {
 
             reviewsFile.createNewFile();
 
-            FileWriter csvWriter = new FileWriter(fileName);
+            FileWriter csvWriter = new FileWriter(String.format("%s/%s", dirName, fileName));
 
             csvWriter.append(":START_ID(Users),");
             csvWriter.append(":END_ID(Goods),");

@@ -28,7 +28,7 @@ public class GoodDataGen {
 
             goodData.createNewFile();
 
-            FileWriter csvWriterGood = new FileWriter(fileName);
+            FileWriter csvWriterGood = new FileWriter(String.format("%s/%s", dirName, fileName));
 
             csvWriterGood.append("goodId:ID(Goods),");
             csvWriterGood.append("NAME,");
@@ -44,7 +44,7 @@ public class GoodDataGen {
 
             goodsOwnership.createNewFile();
 
-            FileWriter csvWriterOwnership = new FileWriter(fileName2);
+            FileWriter csvWriterOwnership = new FileWriter(String.format("%s/%s", dirName, fileName2));
 
             csvWriterOwnership.append(":START_ID(Goods),");
             csvWriterOwnership.append(":END_ID(Merchants),");
