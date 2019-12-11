@@ -3,20 +3,25 @@ import net.andreinc.mockneat.MockNeat;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Timestamp;
 
 import static net.andreinc.mockneat.unit.types.Ints.ints;
 
 public class CycleInjectorDataGen {
 
-    public static void main(String... args) {
+    private boolean isDatasetLarge = false;
+
+    public CycleInjectorDataGen(boolean isDatasetLarge) {
+        this.isDatasetLarge = isDatasetLarge;
+    }
+
+    public void generate() {
 
         try {
 
             // transactions
-
-            String fileName = "src/main/export/cycleTransactions.csv";
-            File cycleTranscations = new File(fileName);
+            String dirName = Constants.folderName(this.isDatasetLarge);
+            String fileName = "cycleTransactions.csv";
+            File cycleTranscations = new File(dirName, fileName);
 
             if (cycleTranscations.exists()) {
                 cycleTranscations.delete();
@@ -34,8 +39,8 @@ public class CycleInjectorDataGen {
             csvWriterTransaction.append("\n");
 
             // connections
-            String fileName2 = "src/main/export/cycleTransactionsConnections.csv";
-            File cycleTranscationsConnections = new File(fileName2);
+            String fileName2 = "cycleTransactionsConnections.csv";
+            File cycleTranscationsConnections = new File(dirName, fileName2);
 
             if (cycleTranscationsConnections.exists()) {
                 cycleTranscationsConnections.delete();
@@ -51,17 +56,23 @@ public class CycleInjectorDataGen {
             csvWriterConnections.append(":TYPE");
             csvWriterConnections.append("\n");
 
-            for (int i = 0; i < 300; i++) {
-                int senderId = getRandomId();
-                int receivedId = getRandomId();
+            int datasetSize = Constants.SMALL_TRANSACTION_CYCLIC;
 
-                int lastMiddleMan = getRandomId();
+            if (this.isDatasetLarge) {
+                datasetSize = Constants.LARGE_TRANSACTION_CYCLIC;
+            }
+
+            for (int i = 0; i < datasetSize; i++) {
+                int senderId = PersonDataGen.getRandomUserId(this.isDatasetLarge);
+                int receivedId = PersonDataGen.getRandomUserId(this.isDatasetLarge);
+
+                int lastMiddleMan = PersonDataGen.getRandomUserId(this.isDatasetLarge);
 
                 csvWriterTransaction.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
                         senderId,
                         lastMiddleMan,
                         getRandomAmount(),
-                        getRandomTimestamp()
+                        Constants.getRandomTimestamp()
                 ));
 
                 int randomMiddleMenSize = ints()
@@ -69,12 +80,12 @@ public class CycleInjectorDataGen {
                         .get();
 
                 for (int j = 0; j < randomMiddleMenSize; j++) {
-                    int newMiddleMan = getRandomId();
+                    int newMiddleMan = PersonDataGen.getRandomUserId(this.isDatasetLarge);
                     csvWriterTransaction.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
                             lastMiddleMan,
                             newMiddleMan,
                             getRandomAmount(),
-                            getRandomTimestamp()
+                            Constants.getRandomTimestamp()
                     ));
 
                     lastMiddleMan = newMiddleMan;
@@ -84,13 +95,13 @@ public class CycleInjectorDataGen {
                         lastMiddleMan,
                         receivedId,
                         getRandomAmount(),
-                        getRandomTimestamp()
+                        Constants.getRandomTimestamp()
                 ));
 
                 csvWriterConnections.append(String.format("%d,%d,%d,CONNECTION\n",
                         senderId,
                         receivedId,
-                        getRandomTimestamp()
+                        Constants.getRandomTimestamp()
                 ));
             }
 
@@ -104,23 +115,11 @@ public class CycleInjectorDataGen {
         }
     }
 
-    private static int getRandomId() {
-        return ints().range(1, 200001).get();
-    }
-
     private static int getRandomAmount() {
         return MockNeat.threadLocal().probabilites(Integer.class)
                 .add(0.5, ints().range(0, 100))
                 .add(0.3, ints().range(100, 300))
                 .add(0.2, ints().range(300, 800))
                 .get();
-    }
-
-    private static long getRandomTimestamp() {
-        long offset = Timestamp.valueOf("2019-01-01 00:00:00").getTime();
-        long end = Timestamp.valueOf("2019-06-01 00:00:00").getTime();
-        long diff = end - offset + 1;
-        Timestamp rand = new Timestamp(offset + (long) (Math.random() * diff));
-        return rand.getTime();
     }
 }

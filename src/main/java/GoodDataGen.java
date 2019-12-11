@@ -9,11 +9,18 @@ import static net.andreinc.mockneat.unit.types.Ints.ints;
 
 public class GoodDataGen {
 
-    public static void main(String... args) {
+    private boolean isDatasetLarge = false;
+
+    public GoodDataGen(boolean isDatasetLarge) {
+        this.isDatasetLarge = isDatasetLarge;
+    }
+
+    public void generate() {
 
         try {
-            String fileName = "src/main/export/goods.csv";
-            File goodData = new File(fileName);
+            String dirName = Constants.folderName(this.isDatasetLarge);
+            String fileName = "goods.csv";
+            File goodData = new File(dirName, fileName);
 
             if (goodData.exists()) {
                 goodData.delete();
@@ -28,8 +35,8 @@ public class GoodDataGen {
             csvWriterGood.append("Price:int");
             csvWriterGood.append("\n");
 
-            String fileName2 = "src/main/export/goodsownership.csv";
-            File goodsOwnership = new File(fileName2);
+            String fileName2 = "goodsownership.csv";
+            File goodsOwnership = new File(dirName, fileName2);
 
             if (goodsOwnership.exists()) {
                 goodsOwnership.delete();
@@ -44,7 +51,17 @@ public class GoodDataGen {
             csvWriterOwnership.append(":TYPE");
             csvWriterOwnership.append("\n");
 
-            for (int i = 200000; i < 400000; i++) {
+            int userSize = Constants.SMALL_USER_SIZE;
+            int goodSize = Constants.SMALL_GOODS_SIZE;
+
+            if (this.isDatasetLarge) {
+                userSize = Constants.LARGE_USER_SIZE;
+                goodSize = Constants.LARGE_GOODS_SIZE;
+            }
+
+            int datasetSize = userSize + goodSize;
+
+            for (int i = userSize; i < datasetSize; i++) {
                 int goodId = i + 1;
                 csvWriterGood.append(String.format("%d,%s,%d\n",
                         goodId,
@@ -54,7 +71,7 @@ public class GoodDataGen {
 
                 csvWriterOwnership.append(String.format("%d,%d,OWNERSHIP\n",
                         goodId,
-                        getRandomMerchantId()
+                        MerchantDataGen.getRandomMerchantId(this.isDatasetLarge)
                 ));
             }
 
@@ -66,10 +83,6 @@ public class GoodDataGen {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static int getRandomMerchantId() {
-        return ints().range(400000, 450001).get();
     }
 
     private static int getRandomAmount() {
@@ -84,5 +97,17 @@ public class GoodDataGen {
         return MockNeat.threadLocal()
                 .words().nouns().format(StringFormatType.CAPITALIZED)
                 .get();
+    }
+
+    public static int getRandomGoodId(boolean isDatasetLarge) {
+        int goodSize = Constants.SMALL_GOODS_SIZE;
+        int userSize = Constants.SMALL_USER_SIZE;
+
+        if (isDatasetLarge) {
+            goodSize = Constants.LARGE_GOODS_SIZE;
+            userSize = Constants.LARGE_USER_SIZE;
+        }
+
+        return ints().range(userSize + 1, userSize + goodSize).get();
     }
 }

@@ -5,13 +5,23 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static net.andreinc.mockneat.unit.types.Ints.ints;
+
 public class MerchantDataGen {
 
-    public static void main(String... args) {
+    private boolean isDatasetLarge = false;
+
+    public MerchantDataGen(boolean isDatasetLarge) {
+        this.isDatasetLarge = isDatasetLarge;
+    }
+
+    public void generate(String... args) {
+
         Fairy fairy = Fairy.create();
         try {
-            String fileName = "src/main/export/merchants.csv";
-            File merchantData = new File(fileName);
+            String dirName = Constants.folderName(this.isDatasetLarge);
+            String fileName = "merchants.csv";
+            File merchantData = new File(dirName, fileName);
 
             if (merchantData.exists()) {
                 merchantData.delete();
@@ -28,7 +38,17 @@ public class MerchantDataGen {
             csvWriter.append("VATNumber");
             csvWriter.append("\n");
 
-            for (int i = 400000; i < 450000; i++) {
+            int userSize = Constants.SMALL_USER_SIZE;
+            int goodSize = Constants.SMALL_GOODS_SIZE;
+            int merchantSize = Constants.SMALL_MERCHANT_SIZE;
+
+            if (this.isDatasetLarge) {
+                userSize = Constants.LARGE_USER_SIZE;
+                goodSize = Constants.LARGE_GOODS_SIZE;
+                merchantSize = Constants.LARGE_MERCHANT_SIZE;
+            }
+
+            for (int i = userSize + goodSize; i < userSize + goodSize + merchantSize; i++) {
                 Company company = fairy.company();
                 csvWriter.append(String.format("%d,%s,%s,%s,%s\n",
                         i + 1,
@@ -44,5 +64,19 @@ public class MerchantDataGen {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int getRandomMerchantId(boolean isDatasetLarge) {
+        int userSize = Constants.SMALL_USER_SIZE;
+        int goodSize = Constants.SMALL_GOODS_SIZE;
+        int merchantSize = Constants.SMALL_MERCHANT_SIZE;
+
+        if (isDatasetLarge) {
+            userSize = Constants.LARGE_USER_SIZE;
+            goodSize = Constants.LARGE_GOODS_SIZE;
+            merchantSize = Constants.LARGE_MERCHANT_SIZE;
+        }
+
+        return ints().range(userSize + goodSize + 1, userSize + goodSize + merchantSize).get();
     }
 }

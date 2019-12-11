@@ -1,19 +1,23 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Timestamp;
-
-import static net.andreinc.mockneat.unit.types.Ints.ints;
 
 public class ConnectionDataGen {
 
-    public static void main(String... args) {
+    private boolean isDatasetLarge = false;
+
+    public ConnectionDataGen(boolean isDatasetLarge) {
+        this.isDatasetLarge = isDatasetLarge;
+    }
+
+    public void generate() {
 
         try {
-            String fileName = "src/main/export/connections.csv";
-            File userData = new File(fileName);
+            String dirName = Constants.folderName(this.isDatasetLarge);
+            String fileName = "connections.csv";
+            File userData = new File(dirName, fileName);
 
-            if(userData.exists()) {
+            if (userData.exists()) {
                 userData.delete();
             }
 
@@ -27,11 +31,17 @@ public class ConnectionDataGen {
             csvWriter.append(":TYPE");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 100000; i++) {
+            int datasetSize = Constants.SMALL_CONNECTIONS;
+
+            if (this.isDatasetLarge) {
+                datasetSize = Constants.LARGE_CONNECTIONS;
+            }
+
+            for (int i = 0; i < datasetSize; i++) {
                 csvWriter.append(String.format("%d,%d,%d,CONNECTION\n",
-                        getRandomId(),
-                        getRandomId(),
-                        getRandomTimestamp()
+                        PersonDataGen.getRandomUserId(this.isDatasetLarge),
+                        PersonDataGen.getRandomUserId(this.isDatasetLarge),
+                        Constants.getRandomTimestamp()
                 ));
             }
 
@@ -42,15 +52,4 @@ public class ConnectionDataGen {
         }
     }
 
-    private static int getRandomId() {
-        return ints().range(1, 200001).get();
-    }
-
-    private static long getRandomTimestamp() {
-        long offset = Timestamp.valueOf("2019-01-01 00:00:00").getTime();
-        long end = Timestamp.valueOf("2019-06-01 00:00:00").getTime();
-        long diff = end - offset + 1;
-        Timestamp rand = new Timestamp(offset + (long)(Math.random() * diff));
-        return rand.getTime();
-    }
 }

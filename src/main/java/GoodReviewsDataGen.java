@@ -9,13 +9,20 @@ import static net.andreinc.mockneat.unit.types.Ints.ints;
 
 public class GoodReviewsDataGen {
 
-    public static void main(String... args) {
+    private boolean isDatasetLarge = false;
+
+    public GoodReviewsDataGen(boolean isDatasetLarge) {
+        this.isDatasetLarge = isDatasetLarge;
+    }
+
+    public void generate() {
 
         try {
-            String fileName = "src/main/export/goodreviews.csv";
-            File reviewsFile = new File(fileName);
+            String dirName = Constants.folderName(this.isDatasetLarge);
+            String fileName = "goodreviews.csv";
+            File reviewsFile = new File(dirName, fileName);
 
-            if(reviewsFile.exists()) {
+            if (reviewsFile.exists()) {
                 reviewsFile.delete();
             }
 
@@ -30,12 +37,18 @@ public class GoodReviewsDataGen {
             csvWriter.append(":TYPE");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 100000; i++) {
+            int datasetSize = Constants.SMALL_REVIEWS;
+
+            if (this.isDatasetLarge) {
+                datasetSize = Constants.LARGE_REVIEWS;
+            }
+
+            for (int i = 0; i < datasetSize; i++) {
                 csvWriter.append(String.format("%d,%d,%d,%d,REVIEW_IN\n",
-                        getRandomUserId(),
-                        getRandomGoodId(),
+                        PersonDataGen.getRandomUserId(this.isDatasetLarge),
+                        GoodDataGen.getRandomGoodId(this.isDatasetLarge),
                         getRandomRating(),
-                        getRandomTimestamp()
+                        Constants.getRandomTimestamp()
                 ));
             }
 
@@ -46,26 +59,10 @@ public class GoodReviewsDataGen {
         }
     }
 
-    private static int getRandomUserId() {
-        return ints().range(1, 200001).get();
-    }
-
-    private static int getRandomGoodId() {
-        return ints().range(200000, 400001).get();
-    }
-
     private static int getRandomRating() {
         return MockNeat.threadLocal().probabilites(Integer.class)
                 .add(0.7, ints().range(4, 6))
                 .add(0.3, ints().range(1, 4))
                 .get();
-    }
-
-    private static long getRandomTimestamp() {
-        long offset = Timestamp.valueOf("2019-01-01 00:00:00").getTime();
-        long end = Timestamp.valueOf("2019-06-01 00:00:00").getTime();
-        long diff = end - offset + 1;
-        Timestamp rand = new Timestamp(offset + (long)(Math.random() * diff));
-        return rand.getTime();
     }
 }

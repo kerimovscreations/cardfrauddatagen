@@ -3,17 +3,23 @@ import net.andreinc.mockneat.MockNeat;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Timestamp;
 
 import static net.andreinc.mockneat.unit.types.Ints.ints;
 
 public class SmurfingInjectorDataGen {
 
-    public static void main(String... args) {
+    private boolean isDatasetLarge = false;
+
+    public SmurfingInjectorDataGen(boolean isDatasetLarge) {
+        this.isDatasetLarge = isDatasetLarge;
+    }
+
+    public void generate() {
 
         try {
-            String fileName = "src/main/export/smurfingTransactions.csv";
-            File userData = new File(fileName);
+            String dirName = Constants.folderName(this.isDatasetLarge);
+            String fileName = "smurfingTransactions.csv";
+            File userData = new File(dirName, fileName);
 
             if (userData.exists()) {
                 userData.delete();
@@ -30,28 +36,34 @@ public class SmurfingInjectorDataGen {
             csvWriter.append(":TYPE");
             csvWriter.append("\n");
 
-            for (int i = 0; i < 1000; i++) {
-                int senderId = getRandomId();
-                int receivedId = getRandomId();
+            int datasetSize = Constants.SMALL_TRANSACTION_SMURFING;
+
+            if (this.isDatasetLarge) {
+                datasetSize = Constants.LARGE_TRANSACTION_SMURFING;
+            }
+
+            for (int i = 0; i < datasetSize; i++) {
+                int senderId = PersonDataGen.getRandomUserId(this.isDatasetLarge);
+                int receivedId = PersonDataGen.getRandomUserId(this.isDatasetLarge);
 
                 int randomMiddleMenSize = ints()
                         .range(3, 10)
                         .get();
 
                 for (int j = 0; j < randomMiddleMenSize; j++) {
-                    int middleManId = getRandomId();
+                    int middleManId = PersonDataGen.getRandomUserId(this.isDatasetLarge);
                     csvWriter.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
                             senderId,
                             middleManId,
                             getRandomAmount(),
-                            getRandomTimestamp()
+                            Constants.getRandomTimestamp()
                     ));
 
                     csvWriter.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
                             middleManId,
                             receivedId,
                             getRandomAmount(),
-                            getRandomTimestamp()
+                            Constants.getRandomTimestamp()
                     ));
                 }
             }
@@ -63,23 +75,11 @@ public class SmurfingInjectorDataGen {
         }
     }
 
-    private static int getRandomId() {
-        return ints().range(1, 200001).get();
-    }
-
     private static int getRandomAmount() {
         return MockNeat.threadLocal().probabilites(Integer.class)
                 .add(0.2, ints().range(0, 100))
                 .add(0.3, ints().range(100, 300))
                 .add(0.5, ints().range(300, 1000))
                 .get();
-    }
-
-    private static long getRandomTimestamp() {
-        long offset = Timestamp.valueOf("2019-01-01 00:00:00").getTime();
-        long end = Timestamp.valueOf("2019-06-01 00:00:00").getTime();
-        long diff = end - offset + 1;
-        Timestamp rand = new Timestamp(offset + (long) (Math.random() * diff));
-        return rand.getTime();
     }
 }

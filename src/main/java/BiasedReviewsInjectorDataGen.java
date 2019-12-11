@@ -1,17 +1,23 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Timestamp;
 
 import static net.andreinc.mockneat.unit.types.Ints.ints;
 
 public class BiasedReviewsInjectorDataGen {
 
-    public static void main(String... args) {
+    private boolean isDatasetLarge = false;
+
+    public BiasedReviewsInjectorDataGen(boolean isDatasetLarge) {
+        this.isDatasetLarge = isDatasetLarge;
+    }
+
+    public void generate() {
 
         try {
-            String fileName = "src/main/export/biasedgoodreviews.csv";
-            File reviewsFile = new File(fileName);
+            String dirName = Constants.folderName(this.isDatasetLarge);
+            String fileName = "biasedgoodreviews.csv";
+            File reviewsFile = new File(dirName, fileName);
 
             if (reviewsFile.exists()) {
                 reviewsFile.delete();
@@ -28,8 +34,8 @@ public class BiasedReviewsInjectorDataGen {
             csvWriter.append(":TYPE");
             csvWriter.append("\n");
 
-            String fileName2 = "src/main/export/biasedgoodownership.csv";
-            File ownershipFile = new File(fileName2);
+            String fileName2 = "biasedgoodownership.csv";
+            File ownershipFile = new File(dirName, fileName2);
 
             if (ownershipFile.exists()) {
                 ownershipFile.delete();
@@ -44,14 +50,20 @@ public class BiasedReviewsInjectorDataGen {
             csvWriter2.append(":TYPE");
             csvWriter2.append("\n");
 
-            for (int i = 0; i < 50; i++) {
-                int merchantId = getRandomMerchantId();
+            int datasetSize = Constants.SMALL_OWNERSHIP_BIASED;
+
+            if (this.isDatasetLarge) {
+                datasetSize = Constants.LARGE_OWNERSHIP_BIASED;
+            }
+
+            for (int i = 0; i < datasetSize; i++) {
+                int merchantId = MerchantDataGen.getRandomMerchantId(this.isDatasetLarge);
                 int randomGoodCount = ints().range(5, 10).get();
 
                 int[] goodIds = new int[randomGoodCount];
 
                 for (int j = 0; j < randomGoodCount; j++) {
-                    int goodId = getRandomGoodId();
+                    int goodId = GoodDataGen.getRandomGoodId(this.isDatasetLarge);
 
                     goodIds[j] = goodId;
 
@@ -64,14 +76,14 @@ public class BiasedReviewsInjectorDataGen {
                 int randomUserCount = ints().range(5, 10).get();
 
                 for (int j = 0; j < randomUserCount; j++) {
-                    int userId = getRandomUserId();
+                    int userId = PersonDataGen.getRandomUserId(this.isDatasetLarge);
 
                     for (int goodId : goodIds) {
                         csvWriter.append(String.format("%d,%d,%d,%d,REVIEW_IN\n",
                                 userId,
                                 goodId,
                                 5,
-                                getRandomTimestamp()
+                                Constants.getRandomTimestamp()
                         ));
                     }
                 }
@@ -84,25 +96,5 @@ public class BiasedReviewsInjectorDataGen {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static int getRandomUserId() {
-        return ints().range(1, 200001).get();
-    }
-
-    private static int getRandomGoodId() {
-        return ints().range(200000, 400001).get();
-    }
-
-    private static int getRandomMerchantId() {
-        return ints().range(400000, 450001).get();
-    }
-
-    private static long getRandomTimestamp() {
-        long offset = Timestamp.valueOf("2019-01-01 00:00:00").getTime();
-        long end = Timestamp.valueOf("2019-06-01 00:00:00").getTime();
-        long diff = end - offset + 1;
-        Timestamp rand = new Timestamp(offset + (long) (Math.random() * diff));
-        return rand.getTime();
     }
 }
