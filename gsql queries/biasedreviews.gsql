@@ -6,7 +6,7 @@ CREATE QUERY findBiasedReviews(int maxLimit) FOR GRAPH MyGraph syntax v2 {
 
     merRef = {Merchant.*};
 
-	merchands = SELECT m
+	merchants = SELECT m
 	            FROM  merRef:m - (<Ownership) - Good - (<Review:r) - User:u
 	            ACCUM m.@rating += r.rating,
 	                  m.@customerRatings += (u.name -> 1),
@@ -14,5 +14,5 @@ CREATE QUERY findBiasedReviews(int maxLimit) FOR GRAPH MyGraph syntax v2 {
 	            HAVING m.@customerRatings.get(m.@mostBiasedCustomer).ratingCount > 1
 	            LIMIT maxLimit;
 
-  PRINT merchands;
+  PRINT merchants;
 }

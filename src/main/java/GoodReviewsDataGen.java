@@ -31,8 +31,8 @@ public class GoodReviewsDataGen {
 
             csvWriter.append(":START_ID(Users),");
             csvWriter.append(":END_ID(Goods),");
-            csvWriter.append("Rating:int,");
-            csvWriter.append("Timestamp:long,");
+            csvWriter.append("Rating,");
+            csvWriter.append("Timestamp,");
             csvWriter.append(":TYPE");
             csvWriter.append("\n");
 

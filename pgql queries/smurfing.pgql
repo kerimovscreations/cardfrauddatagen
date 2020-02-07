@@ -1,4 +1,4 @@
 SELECT u.email, COUNT(u2), u3.email
 MATCH (u:User)-[t:Transaction]-(u2:User)-[t2:Transaction]-(u3:User)
 GROUP BY u, u3
-HAVING COUNT(u2) > 5
+HAVING COUNT(u2) > 3

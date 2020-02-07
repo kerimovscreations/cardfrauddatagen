@@ -32,7 +32,7 @@ public class GoodDataGen {
 
             csvWriterGood.append("goodId:ID(Goods),");
             csvWriterGood.append("NAME,");
-            csvWriterGood.append("Price:int");
+            csvWriterGood.append("Price:long");
             csvWriterGood.append("\n");
 
             String fileName2 = "goodsownership.csv";

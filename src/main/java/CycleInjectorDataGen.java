@@ -33,8 +33,8 @@ public class CycleInjectorDataGen {
 
             csvWriterTransaction.append(":START_ID(Users),");
             csvWriterTransaction.append(":END_ID(Users),");
-            csvWriterTransaction.append("Amount:int,");
-            csvWriterTransaction.append("Timestamp:long,");
+            csvWriterTransaction.append("Amount,");
+            csvWriterTransaction.append("Timestamp,");
             csvWriterTransaction.append(":TYPE");
             csvWriterTransaction.append("\n");
 
@@ -52,7 +52,7 @@ public class CycleInjectorDataGen {
 
             csvWriterConnections.append(":START_ID(Users),");
             csvWriterConnections.append(":END_ID(Users),");
-            csvWriterConnections.append("Timestamp:long,");
+            csvWriterConnections.append("Timestamp,");
             csvWriterConnections.append(":TYPE");
             csvWriterConnections.append("\n");
 

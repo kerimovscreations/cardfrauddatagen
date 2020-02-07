@@ -8,13 +8,14 @@ public class GeneralExporter {
             isDatasetLarge = true;
         }
 
+        new PersonDataGen(isDatasetLarge).generate();
+        new MerchantDataGen(isDatasetLarge).generate();
+        new GoodDataGen(isDatasetLarge).generate();
+
         new BiasedReviewsInjectorDataGen(isDatasetLarge).generate();
         new ConnectionDataGen(isDatasetLarge).generate();
         new CycleInjectorDataGen(isDatasetLarge).generate();
-        new GoodDataGen(isDatasetLarge).generate();
         new GoodReviewsDataGen(isDatasetLarge).generate();
-        new MerchantDataGen(isDatasetLarge).generate();
-        new PersonDataGen(isDatasetLarge).generate();
         new SmurfingInjectorDataGen(isDatasetLarge).generate();
         new TransactionDataGen(isDatasetLarge).generate();
     }

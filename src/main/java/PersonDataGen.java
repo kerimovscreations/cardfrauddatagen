@@ -34,7 +34,7 @@ public class PersonDataGen {
             csvWriter.append("userId:ID(Users),");
             csvWriter.append("Name,");
             csvWriter.append("Email,");
-            csvWriter.append("Age:int,");
+            csvWriter.append("Age:long,");
             csvWriter.append("Sex");
             csvWriter.append("\n");
 

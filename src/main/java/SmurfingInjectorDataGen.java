@@ -31,8 +31,8 @@ public class SmurfingInjectorDataGen {
 
             csvWriter.append(":START_ID(Users),");
             csvWriter.append(":END_ID(Users),");
-            csvWriter.append("Amount:int,");
-            csvWriter.append("Timestamp:long,");
+            csvWriter.append("Amount,");
+            csvWriter.append("Timestamp,");
             csvWriter.append(":TYPE");
             csvWriter.append("\n");
 
