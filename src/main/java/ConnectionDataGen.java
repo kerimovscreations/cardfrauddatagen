@@ -38,7 +38,7 @@ public class ConnectionDataGen {
             }
 
             for (int i = 0; i < datasetSize; i++) {
-                csvWriter.append(String.format("%d,%d,%d,CONNECTION\n",
+                csvWriter.append(String.format("%d,%d,%d,CONNECTED_TO\n",
                         PersonDataGen.getRandomUserId(this.isDatasetLarge),
                         PersonDataGen.getRandomUserId(this.isDatasetLarge),
                         Constants.getRandomTimestamp()

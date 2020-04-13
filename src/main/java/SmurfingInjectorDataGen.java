@@ -52,14 +52,14 @@ public class SmurfingInjectorDataGen {
 
                 for (int j = 0; j < randomMiddleMenSize; j++) {
                     int middleManId = PersonDataGen.getRandomUserId(this.isDatasetLarge);
-                    csvWriter.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
+                    csvWriter.append(String.format("%d,%d,%d,%d,SENT_TO\n",
                             senderId,
                             middleManId,
                             getRandomAmount(),
                             Constants.getRandomTimestamp()
                     ));
 
-                    csvWriter.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
+                    csvWriter.append(String.format("%d,%d,%d,%d,SENT_TO\n",
                             middleManId,
                             receivedId,
                             getRandomAmount(),

@@ -68,7 +68,7 @@ public class CycleInjectorDataGen {
 
                 int lastMiddleMan = PersonDataGen.getRandomUserId(this.isDatasetLarge);
 
-                csvWriterTransaction.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
+                csvWriterTransaction.append(String.format("%d,%d,%d,%d,SENT_TO\n",
                         senderId,
                         lastMiddleMan,
                         getRandomAmount(),
@@ -81,7 +81,7 @@ public class CycleInjectorDataGen {
 
                 for (int j = 0; j < randomMiddleMenSize; j++) {
                     int newMiddleMan = PersonDataGen.getRandomUserId(this.isDatasetLarge);
-                    csvWriterTransaction.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
+                    csvWriterTransaction.append(String.format("%d,%d,%d,%d,SENT_TO\n",
                             lastMiddleMan,
                             newMiddleMan,
                             getRandomAmount(),
@@ -91,14 +91,14 @@ public class CycleInjectorDataGen {
                     lastMiddleMan = newMiddleMan;
                 }
 
-                csvWriterTransaction.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
+                csvWriterTransaction.append(String.format("%d,%d,%d,%d,SENT_TO\n",
                         lastMiddleMan,
                         receivedId,
                         getRandomAmount(),
                         Constants.getRandomTimestamp()
                 ));
 
-                csvWriterConnections.append(String.format("%d,%d,%d,CONNECTION\n",
+                csvWriterConnections.append(String.format("%d,%d,%d,CONNECTED_TO\n",
                         senderId,
                         receivedId,
                         Constants.getRandomTimestamp()

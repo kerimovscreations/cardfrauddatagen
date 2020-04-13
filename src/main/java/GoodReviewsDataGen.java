@@ -43,7 +43,7 @@ public class GoodReviewsDataGen {
             }
 
             for (int i = 0; i < datasetSize; i++) {
-                csvWriter.append(String.format("%d,%d,%d,%d,REVIEW_IN\n",
+                csvWriter.append(String.format("%d,%d,%d,%d,REVIEWED_BY\n",
                         PersonDataGen.getRandomUserId(this.isDatasetLarge),
                         GoodDataGen.getRandomGoodId(this.isDatasetLarge),
                         getRandomRating(),

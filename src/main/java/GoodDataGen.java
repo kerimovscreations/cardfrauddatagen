@@ -69,7 +69,7 @@ public class GoodDataGen {
                         getRandomAmount()
                 ));
 
-                csvWriterOwnership.append(String.format("%d,%d,OWNERSHIP\n",
+                csvWriterOwnership.append(String.format("%d,%d,OWNED_BY\n",
                         goodId,
                         MerchantDataGen.getRandomMerchantId(this.isDatasetLarge)
                 ));

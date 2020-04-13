@@ -67,7 +67,7 @@ public class BiasedReviewsInjectorDataGen {
 
                     goodIds[j] = goodId;
 
-                    csvWriter2.append(String.format("%d,%d,OWNERSHIP\n",
+                    csvWriter2.append(String.format("%d,%d,OWNED_BY\n",
                             goodId,
                             merchantId
                     ));
@@ -79,7 +79,7 @@ public class BiasedReviewsInjectorDataGen {
                     int userId = PersonDataGen.getRandomUserId(this.isDatasetLarge);
 
                     for (int goodId : goodIds) {
-                        csvWriter.append(String.format("%d,%d,%d,%d,REVIEW_IN\n",
+                        csvWriter.append(String.format("%d,%d,%d,%d,REVIEWED_BY\n",
                                 userId,
                                 goodId,
                                 5,

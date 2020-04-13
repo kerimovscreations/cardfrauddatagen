@@ -44,7 +44,7 @@ public class TransactionDataGen {
             }
 
             for (int i = 0; i < datasetSize; i++) {
-                csvWriter.append(String.format("%d,%d,%d,%d,TRANSACTION\n",
+                csvWriter.append(String.format("%d,%d,%d,%d,SENT_TO\n",
                         PersonDataGen.getRandomUserId(this.isDatasetLarge),
                         PersonDataGen.getRandomUserId(this.isDatasetLarge),
                         getRandomAmount(),
