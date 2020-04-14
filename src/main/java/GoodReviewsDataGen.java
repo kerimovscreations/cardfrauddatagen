@@ -30,8 +30,8 @@ public class GoodReviewsDataGen {
             FileWriter csvWriter = new FileWriter(String.format("%s/%s", dirName, fileName));
 
             csvWriter.append(":START_ID(Users),");
-            csvWriter.append(":END_ID(Goods),");
             csvWriter.append("Rating,");
+            csvWriter.append(":END_ID(Goods),");
             csvWriter.append("Timestamp,");
             csvWriter.append(":TYPE");
             csvWriter.append("\n");
@@ -43,10 +43,10 @@ public class GoodReviewsDataGen {
             }
 
             for (int i = 0; i < datasetSize; i++) {
-                csvWriter.append(String.format("%d,%d,%d,%d,REVIEWED_BY\n",
+                csvWriter.append(String.format("%d,%d,%d,%d,REVIEWED_TO\n",
                         PersonDataGen.getRandomUserId(this.isDatasetLarge),
-                        GoodDataGen.getRandomGoodId(this.isDatasetLarge),
                         getRandomRating(),
+                        GoodDataGen.getRandomGoodId(this.isDatasetLarge),
                         Constants.getRandomTimestamp()
                 ));
             }

@@ -1,4 +1,4 @@
-MATCH (u:Users)-[r:REVIEW_IN]->(g:Goods)-[o:OWNERSHIP]->(m:Merchants)
+MATCH (u:User)-[r:REVIEWED_TO]->(g:Good)-[o:OWNED_BY]->(m:Merchant)
 WITH u, m, collect(r) as reviews, collect(g) as goods
   WHERE size(reviews) >= 4
 UNWIND reviews as revList

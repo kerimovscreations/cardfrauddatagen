@@ -28,8 +28,8 @@ public class BiasedReviewsInjectorDataGen {
             FileWriter csvWriter = new FileWriter(String.format("%s/%s", dirName, fileName));
 
             csvWriter.append(":START_ID(Users),");
-            csvWriter.append(":END_ID(Goods),");
             csvWriter.append("Rating,");
+            csvWriter.append(":END_ID(Goods),");
             csvWriter.append("Timestamp,");
             csvWriter.append(":TYPE");
             csvWriter.append("\n");
@@ -79,10 +79,10 @@ public class BiasedReviewsInjectorDataGen {
                     int userId = PersonDataGen.getRandomUserId(this.isDatasetLarge);
 
                     for (int goodId : goodIds) {
-                        csvWriter.append(String.format("%d,%d,%d,%d,REVIEWED_BY\n",
+                        csvWriter.append(String.format("%d,%d,%d,%d,REVIEWED_TO\n",
                                 userId,
-                                goodId,
                                 5,
+                                goodId,
                                 Constants.getRandomTimestamp()
                         ));
                     }
