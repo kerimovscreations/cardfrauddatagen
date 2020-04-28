@@ -5,5 +5,5 @@ WITH receiver
 MATCH (sender:User)-[:SENT_TO]->(pm:User)-[:SENT_TO]->(receiver)
 WITH sender, receiver, collect(pm) AS pms
 WHERE size(pms) >= 3
-SET receiver.suspicious = true',
+SET receiver.smurfingSuspicious = true',
 {phase:'before'})

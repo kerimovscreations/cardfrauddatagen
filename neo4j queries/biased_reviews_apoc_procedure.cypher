@@ -10,7 +10,7 @@ WITH u, m, collect(r) as reviews, collect(g) as goods
 UNWIND reviews as revList
 WITH avg(revList.Rating) as avgRating, u, m, goods, reviews
   WHERE avgRating >= 4
-SET m.suspicious = true
-SET u.suspicious = true
+SET m.biasedReviewsSuspicious = true
+SET u.biasedReviewsSuspicious = true
 ',
 {phase:'before'})
