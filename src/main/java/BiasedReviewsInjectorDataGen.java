@@ -58,7 +58,7 @@ public class BiasedReviewsInjectorDataGen {
 
             for (int i = 0; i < datasetSize; i++) {
                 int merchantId = MerchantDataGen.getRandomMerchantId(this.isDatasetLarge);
-                int randomGoodCount = ints().range(5, 10).get();
+                int randomGoodCount = ints().range(4, 6).get();
 
                 int[] goodIds = new int[randomGoodCount];
 
@@ -73,7 +73,7 @@ public class BiasedReviewsInjectorDataGen {
                     ));
                 }
 
-                int randomUserCount = ints().range(5, 10).get();
+                int randomUserCount = ints().range(1, 3).get();
 
                 for (int j = 0; j < randomUserCount; j++) {
                     int userId = PersonDataGen.getRandomUserId(this.isDatasetLarge);
