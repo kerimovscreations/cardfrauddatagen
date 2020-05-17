@@ -1,6 +1,6 @@
 CALL apoc.trigger.add('detect_biased_reviews','UNWIND $createdRelationships AS rev
 WITH rev
-MATCH (sender:User)-[rev:REVIEWED_TO]->(good:Good)
+WITH startNode(rev) as sender, endNode(rev) AS good
 WITH good
 MATCH (good)-[:OWNED_BY]->(m:Merchant)
 WITH m
